@@ -1,0 +1,78 @@
+<div class="coluna-esquerda altura-1_1 largura-1_3 centro">
+    <img src="recursos/imgs/T5.png" style="top: 0px;left: 0px;width: 138px;">
+</div>
+<div class="coluna-direita" style="margin-right: 35px;margin-top: 40px;">
+    <p>Acompanhe a discussão sobre a análise de um indicador do Previne Brasil pela equipe Ipê da UBS Jacarandá.</p>
+    <div>
+        <div class="animate__animated animate__backInRight" style="margin-top: 39px;margin-left: 63px;width: 393px;">
+            <img id="janela_1" src="recursos/imgs/slide-4/Quadro-1.png" style="width: 393px;">
+            <img id="janela_2" src="recursos/imgs/slide-4/Quadro-2.png" style="width: 393px;">
+            <img id="janela_3" src="recursos/imgs/slide-4/Quadro-3.png" style="width: 393px;">
+        </div>
+        <div style="margin-top: 10px;margin-left: 63px;display: flex;justify-content: space-between;">
+            <img src="recursos/imgs/slide-4/Quadro-1.png" style="width: 393px;">
+            <img src="recursos/imgs/slide-4/Quadro-2.png" style="width: 393px;">
+            <img src="recursos/imgs/slide-4/Quadro-3.png" style="width: 393px;">
+        </div>
+    </div>
+</div>
+<script>
+    $(() => {
+        let janelas = $(document).find('[id^=janela]');
+        console.log(janelas);
+        let avanca = $(document).find('[id^=avanca]').on('click', avancar);
+        let volta = $(document).find('[id^=volta]').on('click', voltar);
+        let contador = 1;
+        $(volta).css('opacity', '0.6');
+
+        apagarJanelas();
+        $(document).find('[id^=janela_1]').show();
+
+        function avancar() {
+            if (contador < janelas.length) {
+                apagarJanelas();
+                contador++;
+                $(document).find(`[id^=janela_${contador}]`).show();
+            }
+            mudarBotoes();
+        }
+
+        function voltar() {
+            if (contador > 1) {
+                apagarJanelas();
+                contador--;
+                $(document).find(`[id^=janela_${contador}]`).show();
+            }
+            mudarBotoes();
+        }
+
+        function mudarBotoes() {
+            if (contador == 1) {
+                $(volta).css('opacity', '0.6');
+                $(avanca).css('opacity', '1');
+            }
+            if (contador == janelas.length) {
+                $(volta).css('opacity', '1');
+                $(avanca).css('opacity', '0.6');
+            }
+            if (contador > 1 && contador < janelas.length) {
+                $(volta).css('opacity', '1');
+                $(avanca).css('opacity', '1');
+            }
+        }
+
+        let botoes = $(document).find('[id^=botao]').map((index, botao) => {
+            $(botao).click(() => {
+                apagarJanelas();
+                mudarBotao(index + 1)
+                $(janelas[index + 1]).show();
+            })
+        })
+
+        function apagarJanelas() {
+            janelas.map((index, janela) => {
+                $(janela).hide();
+            })
+        }
+    })
+</script>
